@@ -1,22 +1,17 @@
 FROM n8nio/n8n
 
-# Copy startup script into container
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
+# Switch to root to modify file permissions
+USER root
 
-# Expose n8n default portFROM n8nio/n8n
+# Copy start.sh to a writable directory
+COPY start.sh /home/node/start.sh
+RUN chmod +x /home/node/start.sh
 
-# Copy startup script into a writable directory
-COPY start.sh /usr/local/bin/start.sh
-RUN chmod +x /usr/local/bin/start.sh
+# Switch back to non-root user
+USER node
 
-# Expose n8n default port
+# Expose the n8n port
 EXPOSE 5678
 
-# Run our startup script
-ENTRYPOINT ["/usr/local/bin/start.sh"]
-
-EXPOSE 5678
-
-# Run our script instead of relying on CMD
-ENTRYPOINT ["/start.sh"]
+# Use the script as the entrypoint
+ENTRYPOINT ["/home/node/start.sh"]
