@@ -1,3 +1,3 @@
 #!/bin/sh
-echo "Starting n8n..."
+echo "✅ Starting n8n..."
 n8n
