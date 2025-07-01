@@ -1,11 +1,11 @@
 FROM n8nio/n8n
 
-# Set timezone (optional but recommended)
-ENV GENERIC_TIMEZONE=Asia/Kolkata
+# Copy startup script into container
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
-# Expose port used by n8n
+# Expose n8n default port
 EXPOSE 5678
 
-# Set the default command to run n8n
-CMD ["n8n"]
-
+# Run our script instead of relying on CMD
+ENTRYPOINT ["/start.sh"]
